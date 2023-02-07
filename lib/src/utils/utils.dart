@@ -1,6 +1,6 @@
 import 'dart:math' as math;
+
 import 'package:flutter/material.dart';
-import 'package:flutter_agenda/src/models/agenda_event.dart';
 
 class Utils {
   static bool sameDay(DateTime date, [DateTime? target]) {
@@ -10,8 +10,12 @@ class Utils {
         target.day == date.day;
   }
 
-  static double pillarWidth(int lenght, double timeWidth, double defaultWidth,
-      Orientation orientation) {
+  static double pillarWidth(
+    int lenght,
+    double timeWidth,
+    double defaultWidth,
+    Orientation orientation,
+  ) {
     MediaQueryData mediaData =
         MediaQueryData.fromWindow(WidgetsBinding.instance!.window);
     double screenWidth = mediaData.size.width;
@@ -58,51 +62,6 @@ class Utils {
 
   static String minFormatter(int minute) {
     return _addLeadingZero(minute);
-  }
-
-  static Widget eventText(
-    AgendaEvent event,
-    BuildContext context,
-    double height,
-    double width,
-  ) {
-    List<TextSpan> text = [
-      TextSpan(
-        text: Utils.hourFormatter(event.start.hour, event.start.minute) +
-            ' - ' +
-            Utils.hourFormatter(event.end.hour, event.end.minute) +
-            ' ',
-      ),
-      TextSpan(
-        text: event.title + " ",
-      ),
-      TextSpan(
-        text: event.subtitle,
-        style: event.subtitleStyle,
-      ),
-    ];
-
-    bool? exceedHeight;
-    while (exceedHeight ?? true) {
-      exceedHeight = _exceedHeight(text, event.textStyle, height, width);
-      if (exceedHeight == null || !exceedHeight) {
-        if (exceedHeight == null) {
-          text.clear();
-        }
-        break;
-      }
-
-      if (!_ellipsize(text)) {
-        break;
-      }
-    }
-
-    return RichText(
-      text: TextSpan(
-        children: text,
-        style: event.textStyle,
-      ),
-    );
   }
 
   static String _addLeadingZero(int number) {

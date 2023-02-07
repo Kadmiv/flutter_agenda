@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_agenda/src/models/header_logo.dart';
 import 'package:flutter_agenda/src/models/time_slot.dart';
 
 class AgendaStyle {
@@ -9,34 +8,38 @@ class AgendaStyle {
     this.startHour: 0,
     this.endHour: 24,
     this.direction: TextDirection.ltr,
+    this.cornerTop: true,
     this.cornerBottom: true,
     this.cornerRight: true,
+    this.cornerLeft: true,
     this.pillarColor: Colors.white,
     this.cornerColor: Colors.white,
     this.timelineColor: Colors.white,
     this.timelineItemColor: Colors.white,
-    this.headSeperator: false,
-    this.pillarSeperator: false,
+    this.visibleHeadSeperator: false,
+    this.visiblePillarSeperator: false,
     this.mainBackgroundColor: Colors.white,
     this.decorationLineBorderColor: const Color(0xFFCECECE),
     this.headBottomBorder = true,
-    this.fittedWidth = true,
+    this.visibleBottomBorder = true,
+    this.isFittedWidth = true,
     this.timelineBorderColor: const Color(0xFF7F7F7F),
     this.timeItemTextColor: const Color(0xFF7B7B7B),
+    this.timeSlotHeight: 100,
     this.eventRadius: 5,
-    this.timeItemTextStyle: const TextStyle(
-        color: Color(0xFFF999999), fontSize: 11, fontWeight: FontWeight.w300),
     this.pillarWidth: 200,
     this.headerHeight: 50,
     this.timeSlot: TimeSlot.half,
-    this.headerLogo = HeaderLogo.circle,
     this.timeItemWidth: 70,
     this.decorationLineHeight: 20,
     this.decorationLineDashWidth: 4,
     this.decorationLineDashSpaceWidth: 4,
     this.eventBorderWidth: 4,
+    this.pillarViewPadding: EdgeInsets.zero,
     this.visibleTimeBorder: true,
-    this.visibleDecorationBorder: true,
+    this.visibleTimelineBorder: true,
+    this.visibleTimeDecorationBorder: true,
+    this.visibleTimelineSeparator: true,
   });
 
   final TextDirection direction;
@@ -54,17 +57,16 @@ class AgendaStyle {
   /// pillar color.
   final Color pillarColor;
 
-  /// the style of the header logo
-  final HeaderLogo headerLogo;
-
   /// the top left corner color
   final Color cornerColor;
 
   /// the is corner bottom border is active
+  final bool cornerTop;
   final bool cornerBottom;
 
   /// the is corner right border is active
   final bool cornerRight;
+  final bool cornerLeft;
 
   /// the time item [hour] text color
   final Color timeItemTextColor;
@@ -86,17 +88,18 @@ class AgendaStyle {
 
   /// head bottom border
   final bool headBottomBorder;
+  final bool visibleBottomBorder;
 
   final Color decorationLineBorderColor;
 
   // pillar width
   final double pillarWidth;
 
-  final bool fittedWidth;
+  final bool isFittedWidth;
 
-  final bool headSeperator;
+  final bool visibleHeadSeperator;
 
-  final bool pillarSeperator;
+  final bool visiblePillarSeperator;
 
   final double headerHeight;
 
@@ -115,6 +118,8 @@ class AgendaStyle {
   /// you get a 60 height time slot
   final TimeSlot timeSlot;
 
+  final double timeSlotHeight;
+
   /// the time item width
   final double timeItemWidth;
 
@@ -127,15 +132,18 @@ class AgendaStyle {
   /// event left border width
   final double eventBorderWidth;
 
-  /// time item text style
-  final TextStyle timeItemTextStyle;
-
   /// decoration line dash space width
   final double decorationLineDashSpaceWidth;
 
   /// visible time border
   final bool visibleTimeBorder;
 
+  final EdgeInsets pillarViewPadding;
+
   /// visible decoration border
-  final bool visibleDecorationBorder;
+  final bool visibleTimeDecorationBorder;
+  final bool visibleTimelineBorder;
+
+  /// visible decoration border
+  final bool visibleTimelineSeparator;
 }

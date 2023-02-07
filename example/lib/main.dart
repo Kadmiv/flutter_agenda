@@ -1,6 +1,7 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_agenda/flutter_agenda.dart';
-import 'package:flutter_agenda_demo/navto.dart';
 
 void main() => runApp(MyApp());
 
@@ -22,56 +23,82 @@ class AgendaScreen extends StatefulWidget {
   _AgendaScreenState createState() => _AgendaScreenState();
 }
 
-late List<Resource> resources = <Resource>[];
-bool _isloading = true;
-TimeSlot _selectedTimeSlot = TimeSlot.half;
+TimeSlot _selectedTimeSlot = TimeSlot.full;
 
 class _AgendaScreenState extends State<AgendaScreen> {
+  var resources = <Resource<HeaderData, AgendaEvent>>[];
+
   @override
   void initState() {
     super.initState();
     resources = [
       Resource(
-        head: Header(title: 'الموارد 1.', subtitle: '3 التعيينات', object: 1),
+        header: HeaderData(
+          title: 'HeaderData 1',
+        ),
         events: [
           AgendaEvent(
-            title: 'اجتماع D.',
-            subtitle: 'ب',
-            backgroundColor: Colors.red,
-            start: EventTime(hour: 15, minute: 0),
-            end: EventTime(hour: 16, minute: 30),
+            startTime: EventTime(hour: 15, minute: 0),
+            endTime: EventTime(hour: 16, minute: 30),
           ),
           AgendaEvent(
-            title: 'اجتماع Z.',
-            subtitle: 'MZ.',
-            start: EventTime(hour: 12, minute: 0),
-            end: EventTime(hour: 13, minute: 20),
+            startTime: EventTime(hour: 12, minute: 0),
+            endTime: EventTime(hour: 13, minute: 20),
           ),
         ],
       ),
       Resource(
-        head: Header(title: 'الموارد 2', object: 2),
+        header: HeaderData(
+          title: 'HeaderData 2',
+        ),
         events: [
           AgendaEvent(
-            title: 'اجتماع G.',
-            subtitle: 'MG',
-            backgroundColor: Colors.yellowAccent,
-            start: EventTime(hour: 9, minute: 10),
-            end: EventTime(hour: 11, minute: 45),
+            startTime: EventTime(hour: 9, minute: 10),
+            endTime: EventTime(hour: 11, minute: 45),
           ),
         ],
       ),
       Resource(
-        head: Header(title: 'الموارد 3.', object: 3, color: Colors.yellow),
+        header: HeaderData(
+          title: 'HeaderData 3',
+        ),
         events: [
           AgendaEvent(
-            title: 'اجتماع أ',
-            subtitle: 'MA',
-            start: EventTime(hour: 10, minute: 10),
-            end: EventTime(hour: 11, minute: 45),
-            onTap: () {
-              print("meeting A Details");
-            },
+            startTime: EventTime(hour: 10, minute: 10),
+            endTime: EventTime(hour: 11, minute: 45),
+          ),
+        ],
+      ),
+      Resource(
+        header: HeaderData(
+          title: 'HeaderData 4',
+        ),
+        events: [
+          AgendaEvent(
+            startTime: EventTime(hour: 10, minute: 10),
+            endTime: EventTime(hour: 11, minute: 45),
+          ),
+        ],
+      ),
+      Resource(
+        header: HeaderData(
+          title: 'HeaderData 5',
+        ),
+        events: [
+          AgendaEvent(
+            startTime: EventTime(hour: 10, minute: 10),
+            endTime: EventTime(hour: 11, minute: 45),
+          ),
+        ],
+      ),
+      Resource(
+        header: HeaderData(
+          title: 'HeaderData 6',
+        ),
+        events: [
+          AgendaEvent(
+            startTime: EventTime(hour: 10, minute: 10),
+            endTime: EventTime(hour: 11, minute: 45),
           ),
         ],
       ),
@@ -80,158 +107,266 @@ class _AgendaScreenState extends State<AgendaScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Directionality(
-      textDirection: TextDirection.rtl,
-      child: SafeArea(
-        child: Scaffold(
-          appBar: AppBar(
-            title: Text('Flutter Agenda'),
-            actions: [
-              IconButton(
-                icon: Icon(Icons.refresh),
-                onPressed: () {
-                  setState(() {
-                    _isloading = !_isloading;
-                  });
-                },
-              ),
-              IconButton(
-                icon: Icon(Icons.add),
-                onPressed: () {
-                  setState(() {
-                    resources.addAll([
-                      Resource(
-                        head: Header(title: 'الموارد 4.', object: 4),
-                        events: [
-                          AgendaEvent(
-                            title: 'اجتماع أ',
-                            subtitle: 'MA',
-                            start: EventTime(hour: 10, minute: 10),
-                            end: EventTime(hour: 11, minute: 45),
-                            onTap: () {
-                              print("meeting A Details");
-                            },
-                          ),
-                        ],
+    return SafeArea(
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text('Flutter Agenda'),
+          actions: [
+            IconButton(
+              icon: Icon(Icons.refresh),
+              onPressed: () {},
+            ),
+            IconButton(
+              icon: Icon(Icons.add),
+              onPressed: () {
+                setState(() {
+                  resources.addAll([
+                    Resource(
+                      header: HeaderData(
+                        title: '12',
                       ),
-                      Resource(
-                        head: Header(title: 'الموارد 4.', object: 4),
-                        events: [
-                          AgendaEvent(
-                            title: 'اجتماع أ',
-                            subtitle: 'MA',
-                            start: EventTime(hour: 10, minute: 10),
-                            end: EventTime(hour: 11, minute: 45),
-                            onTap: () {
-                              print("meeting A Details");
-                            },
-                          ),
-                        ],
-                      )
-                    ]);
-                  });
-                },
-              ),
-              IconButton(
-                icon: Icon(Icons.remove),
-                onPressed: () {
-                  setState(() {
-                    resources.removeAt(0);
-                  });
-                },
-              ),
-              IconButton(
-                icon: Icon(Icons.event),
-                onPressed: () {
-                  setState(() {
-                    resources.first.events.add(AgendaEvent(
-                      title: 'اجتماع أ',
-                      subtitle: 'MA',
-                      start: EventTime(hour: 9, minute: 0),
-                      end: EventTime(hour: 11, minute: 45),
-                      onTap: () {
-                        print("meeting A Details");
-                      },
-                    ));
-                  });
-                },
-              ),
-              TextButton(
-                child: Text("15 min", style: TextStyle(color: Colors.white)),
-                onPressed: () {
-                  setState(() {
-                    _selectedTimeSlot = TimeSlot.quarter;
-                  });
-                },
-              ),
-              TextButton(
-                child: Text("30 min", style: TextStyle(color: Colors.white)),
-                onPressed: () {
-                  setState(() {
-                    _selectedTimeSlot = TimeSlot.half;
-                  });
-                },
-              ),
-              TextButton(
-                child: Text("1h", style: TextStyle(color: Colors.white)),
-                onPressed: () {
-                  setState(() {
-                    _selectedTimeSlot = TimeSlot.full;
-                  });
-                },
-              ),
-              TextButton(
-                child: Text("Navigate", style: TextStyle(color: Colors.white)),
-                onPressed: () {
-                  showModalBottomSheet(
-                      context: context, builder: (context) => SecondScreen());
-                },
-              ),
-            ],
+                      events: [
+                        AgendaEvent(
+                          startTime: EventTime(hour: 10, minute: 10),
+                          endTime: EventTime(hour: 11, minute: 45),
+                        ),
+                      ],
+                    ),
+                    Resource(
+                      header: HeaderData(
+                        title: '12',
+                      ),
+                      events: [
+                        AgendaEvent(
+                          startTime: EventTime(hour: 10, minute: 10),
+                          endTime: EventTime(hour: 11, minute: 45),
+                        ),
+                      ],
+                    ),
+                  ]);
+                });
+              },
+            ),
+            IconButton(
+              icon: Icon(Icons.remove),
+              onPressed: () {
+                setState(() {
+                  resources.removeAt(0);
+                });
+              },
+            ),
+            IconButton(
+              icon: Icon(Icons.event),
+              onPressed: () {
+                setState(() {
+                  resources.first.events.add(
+                    AgendaEvent(
+                      startTime: EventTime(hour: 9, minute: 0),
+                      endTime: EventTime(hour: 11, minute: 45),
+                    ),
+                  );
+                });
+              },
+            ),
+            TextButton(
+              child: Text("15 min", style: TextStyle(color: Colors.white)),
+              onPressed: () {
+                setState(() {
+                  _selectedTimeSlot = TimeSlot.quarter;
+                });
+              },
+            ),
+            TextButton(
+              child: Text("30 min", style: TextStyle(color: Colors.white)),
+              onPressed: () {
+                setState(() {
+                  _selectedTimeSlot = TimeSlot.half;
+                });
+              },
+            ),
+            TextButton(
+              child: Text("1h", style: TextStyle(color: Colors.white)),
+              onPressed: () {
+                setState(() {
+                  _selectedTimeSlot = TimeSlot.full;
+                });
+              },
+            ),
+          ],
+        ),
+        body: FlutterAgenda<HeaderData, AgendaEvent>(
+          resources: resources,
+          agendaStyle: AgendaStyle(
+            startHour: 9,
+            endHour: 20,
+            timeSlot: _selectedTimeSlot,
+            isFittedWidth: false,
+            timeItemWidth: 50,
+            headerHeight: 40,
+            pillarWidth: 120,
+            visibleTimeDecorationBorder: false,
+            visibleHeadSeperator: false,
+            visibleTimelineSeparator: false,
+            visiblePillarSeperator: true,
+            cornerBottom: false,
+            cornerRight: false,
+            mainBackgroundColor: Theme.of(context).colorScheme.surface,
+            // timelineBorderColor: Colors.transparent,
+            timelineItemColor: Colors.transparent,
           ),
-          body: _isloading
-              ? Center(
-                  child: CircularProgressIndicator(),
-                )
-              : FlutterAgenda(
-                  resources: resources,
-                  agendaStyle: AgendaStyle(
-                    direction: TextDirection.rtl,
-                    startHour: 9,
-                    endHour: 20,
-                    headerLogo: HeaderLogo.bar,
-                    fittedWidth: false,
-                    timeItemWidth: 45,
-                    timeSlot: _selectedTimeSlot,
-                  ),
-                  // the click else where (other than an event because it has it's own onTap parameter)
-                  // you get the object linked to the head object of the pillar which could be you project costume object
-                  // and the cliked time
-                  onTap: (clickedTime, object) {
-                    print(
-                        "Clicked time: ${clickedTime.hour}:${clickedTime.minute}");
-                    print("Head Object related to the resource: $object");
-                    resources
-                        .where((resource) => resource.head.object == object)
-                        .first
-                        .events
-                        .add(AgendaEvent(
-                          title: 'اجتماع أ',
-                          subtitle: 'MA',
-                          start: clickedTime,
-                          end: EventTime(
-                              hour: clickedTime.hour + 1,
-                              minute: clickedTime.minute),
-                          onTap: () {
-                            print("meeting A Details");
-                          },
-                        ));
-
-                    setState(() {});
-                  },
-                ),
+          headerBuilder: _headerBuilder,
+          eventBuilder: _eventBuilder,
+          timeSlotBuilder: _timeSlotBuilder,
         ),
       ),
     );
   }
+
+  static String hourFormatter(int hour, int minute) {
+    return _addLeadingZero(hour) + ':' + _addLeadingZero(minute);
+  }
+
+  static String minFormatter(int minute) {
+    return _addLeadingZero(minute);
+  }
+
+  static String _addLeadingZero(int number) {
+    return (number < 10 ? '0' : '') + number.toString();
+  }
+
+  Widget _eventBuilder(BuildContext context, dynamic event) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Expanded(
+          child: Container(
+            decoration: BoxDecoration(
+              color: Colors.greenAccent,
+              borderRadius: BorderRadius.circular(8),
+            ),
+            child: Center(
+              child: Text(
+                hourFormatter(event.start.hour, event.start.minute) +
+                    ' - ' +
+                    hourFormatter(event.end.hour, event.end.minute) +
+                    ' ',
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _headerBuilder(BuildContext context, dynamic header) {
+    return Padding(
+      padding: const EdgeInsets.all(4),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          CircleAvatar(
+            radius: 16,
+            backgroundImage: NetworkImage(
+              'https://video-editor.su/images/kak-snimalsya-film-avatar_01.jpg',
+            ),
+          ),
+          Center(
+            child: Text(
+              header.title,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _timeSlotBuilder(BuildContext context, int hour, TimeSlot slotType) {
+    switch (slotType) {
+      case TimeSlot.half:
+        {
+          return Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              Padding(
+                padding: EdgeInsets.symmetric(vertical: 2, horizontal: 5),
+                child: Text(
+                  Utils.hourFormatter(hour, 0),
+                  textAlign: TextAlign.right,
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.symmetric(vertical: 2, horizontal: 5),
+                child: Text(
+                  Utils.hourFormatter(hour, 30),
+                  textAlign: TextAlign.right,
+                ),
+              ),
+            ].toList(),
+          );
+        }
+      case TimeSlot.quarter:
+        {
+          return Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              Padding(
+                padding: EdgeInsets.symmetric(vertical: 2, horizontal: 5),
+                child: Text(
+                  Utils.hourFormatter(hour, 0),
+                  textAlign: TextAlign.right,
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.symmetric(vertical: 2, horizontal: 5),
+                child: Text(
+                  Utils.minFormatter(15),
+                  textAlign: TextAlign.right,
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.symmetric(vertical: 2, horizontal: 5),
+                child: Text(
+                  Utils.hourFormatter(hour, 30),
+                  textAlign: TextAlign.right,
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.symmetric(vertical: 2, horizontal: 5),
+                child: Text(
+                  Utils.minFormatter(45),
+                  textAlign: TextAlign.right,
+                ),
+              ),
+            ],
+          );
+        }
+
+      default:
+        {
+          return Padding(
+            padding: const EdgeInsets.all(5.0),
+            child: Text(
+              Utils.hourFormatter(hour, 0),
+              textAlign: TextAlign.right,
+            ),
+          );
+        }
+    }
+  }
+}
+
+class HeaderData extends Header {
+  HeaderData({
+    required this.title,
+    this.subtitle,
+    // required this.object,
+  }) : super(title);
+
+  String title;
+  String? subtitle;
+// Object object;
 }

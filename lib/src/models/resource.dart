@@ -1,17 +1,17 @@
-import 'package:flutter_agenda/src/models/header.dart';
 import 'package:flutter_agenda/src/models/agenda_event.dart';
+import 'package:flutter_agenda/src/models/header.dart';
 
-class Resource {
+class Resource<H , E extends AbstractEvent> {
   /// Pillar object helps link the resource with his appointments.
 
-  /// [head] employee/resource.
-  final Header head;
+  /// [header] employee/resource.
+  final H header;
 
   /// [events] (appointments/Todos) linked to the head.
-  final List<AgendaEvent> events;
+  final List<E> events;
 
   Resource({
-    required this.head,
+    required this.header,
     required this.events,
   });
 }
